@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Düsseldorf Reiseplan - 22.-24. Mai 2026</title>
+    <style>
+        :root {
+            --primary: #0055a4;
+            --secondary: #0088cc;
+            --accent: #ff6600;
+            --light: #f8f9fa;
+            --dark: #212529;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f5f7fa;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            margin-bottom: 30px;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        header h1 { font-size: 2.5rem; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        .info-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-left: 5px solid var(--primary);
+        }
+        .info-box h2 { color: var(--primary); margin-bottom: 15px; }
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-top: 15px; }
+        .info-item { display: flex; align-items: center; }
+        .info-item i { margin-right: 10px; color: var(--secondary); font-size: 1.2rem; }
+        .day-plan { background: white; border-radius: 10px; margin-bottom: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden; }
+        .day-header { background: var(--primary); color: white; padding: 20px; font-size: 1.5rem; font-weight: bold; }
+        .day-header .date { display: block; font-size: 1.1rem; opacity: 0.9; margin-top: 5px; }
+        .timeline { padding: 20px; position: relative; }
+        .timeline::before { content: ''; position: absolute; left: 30px; top: 0; bottom: 0; width: 2px; background: var(--secondary); }
+        .timeline-item { padding: 15px 0; position: relative; margin-left: 60px; }
+        .timeline-item::before {
+            content: ''; position: absolute; left: -45px; top: 20px; width: 12px; height: 12px;
+            background: var(--secondary); border-radius: 50%; border: 3px solid white;
+            box-shadow: 0 0 0 2px var(--secondary);
+        }
+        .timeline-time { font-weight: bold; color: var(--primary); font-size: 1.1rem; margin-bottom: 5px; }
+        .timeline-title { font-weight: bold; font-size: 1.2rem; margin-bottom: 5px; }
+        .timeline-description { color: #555; margin-bottom: 8px; }
+        .timeline-location { font-style: italic; color: #777; font-size: 0.9rem; }
+        .timeline-walking {
+            background: #e3f2fd; padding: 8px 12px; border-radius: 5px; font-size: 0.85rem;
+            color: var(--primary); margin-top: 8px; display: inline-block;
+        }
+        .map-section { background: white; border-radius: 10px; margin-bottom: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden; }
+        .map-header { padding: 20px; background: var(--light); border-bottom: 1px solid #eee; }
+        .map-container { height: 500px; width: 100%; }
+        .map-container iframe { height: 100%; width: 100%; border: none; }
+        .gallery { background: white; border-radius: 10px; padding: 20px; margin-bottom: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .gallery h2 { color: var(--primary); margin-bottom: 20px; text-align: center; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; }
+        .gallery-item { position: relative; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); transition: transform 0.3s ease; }
+        .gallery-item:hover { transform: translateY(-5px); }
+        .gallery-item img { width: 100%; height: 200px; object-fit: cover; }
+        .gallery-caption {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            background: rgba(0,0,0,0.7); color: white; padding: 10px; font-size: 0.9rem;
+        }
+        .tips-section { background: white; border-radius: 10px; padding: 20px; margin-bottom: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .tips-section h2 { color: var(--primary); margin-bottom: 15px; }
+        .tip-item { padding: 10px 0; border-bottom: 1px solid #eee; }
+        .tip-item:last-child { border-bottom: none; }
+        .tip-item strong { color: var(--secondary); }
+        footer { text-align: center; padding: 20px; color: #777; font-size: 0.9rem; }
+        @media (max-width: 768px) {
+            header h1 { font-size: 1.8rem; }
+            .timeline-item { margin-left: 40px; }
+            .timeline::before { left: 20px; }
+            .timeline-item::before { left: -35px; }
+            .map-container { height: 400px; }
+            .gallery-grid { grid-template-columns: 1fr; }
+        }
+        .highlight { background: #fff3cd; padding: 2px 6px; border-radius: 3px; font-weight: bold; }
+        .must-see { color: var(--accent); font-weight: bold; }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🇩🇪 Düsseldorf Reiseplan</h1>
+            <p>22. - 24. Mai 2026 | Kunst, Kultur & Natur zu Fuß erkundet</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="info-box">
+            <h2>📋 Reiseübersicht</h2>
+            <div class="info-grid">
+                <div class="info-item"><i class="fas fa-users"></i><span><strong>Teilnehmer:</strong> Angus Young + 4 Freunde</span></div>
+                <div class="info-item"><i class="fas fa-calendar-alt"></i><span><strong>Datum:</strong> 22. - 24. Mai 2026</span></div>
+                <div class="info-item"><i class="fas fa-plane-arrival"></i><span><strong>Ankunft:</strong> Flughafen Düsseldorf, 8:10 Uhr</span></div>
+                <div class="info-item"><i class="fas fa-plane-departure"></i><span><strong>Abflug:</strong> Flughafen Düsseldorf, 19:15 Uhr</span></div>
+                <div class="info-item"><i class="fas fa-hotel"></i><span><strong>Hotel:</strong> Me and All Hotel Düsseldorf, by Hyatt</span></div>
+                <div class="info-item"><i class="fas fa-door-open"></i><span><strong>Check-out:</strong> 24.05., 16:30 Uhr</span></div>
+            </div>
+        </div>
+
+        <!-- FREITAG -->
+        <div class="day-plan">
+            <div class="day-header">Freitag, 22. Mai 2026<span class="date">Ankunft & Medienhafen-Highlights</span></div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-time">08:10</div>
+                    <div class="timeline-title">✈️ Ankunft Flughafen Düsseldorf</div>
+                    <div class="timeline-description">S-Bahn S11 Richtung Düsseldorf Hbf (Fahrtzeit ca. 20 Min.)</div>
+                    <div class="timeline-location">Flughafen Düsseldorf (DUS)</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">08:30 - 09:00</div>
+                    <div class="timeline-title">🏨 Transfer zum Hotel</div>
+                    <div class="timeline-description">S-Bahn S11 bis Hauptbahnhof, dann 5 Min. zu Fuß</div>
+                    <div class="timeline-location">Me and All Hotel Düsseldorf, Immermannstraße 46</div>
+                    <div class="timeline-walking">🚶 5 Min. vom Hbf</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">09:00 - 09:30</div>
+                    <div class="timeline-title">🔑 Check-in & Gepäck abstellen</div>
+                    <div class="timeline-location">Me and All Hotel Düsseldorf</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">09:30 - 10:30</div>
+                    <div class="timeline-title">☕ Frühstück</div>
+                    <div class="timeline-description">Café Extrablatt oder Starbucks am Hauptbahnhof</div>
+                    <div class="timeline-location">Immermannstraße / Bahnhofsviertel</div>
+                    <div class="timeline-walking">🚶 2 Min. vom Hotel</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">10:30 - 12:30</div>
+                    <div class="timeline-title"><span class="must-see">🛍️ Königsallee & Kö-Bögen</span></div>
+                    <div class="timeline-description">Luxus-Shopping und moderne Architektur</div>
+                    <div class="timeline-location">Königsallee / Gustaf-Gründgens-Platz 1</div>
+                    <div class="timeline-walking">🚶 10 Min. vom Hotel</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">12:30 - 13:30</div>
+                    <div class="timeline-title">🍽️ Mittagessen</div>
+                    <div class="timeline-description">Brauerei Schumacher oder Hausbrauerei Alt Pott</div>
+                    <div class="timeline-location">Altstadt-Nähe</div>
+                    <div class="timeline-walking">🚶 15 Min. von Königsallee</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">13:30 - 15:30</div>
+                    <div class="timeline-title"><span class="must-see">🏰 Altstadt erkunden</span></div>
+                    <div class="timeline-description">Historisches Zentrum mit Rheinpromenade, Brauereien und Burgplatz</div>
+                    <div class="timeline-location">Altstadt, Burgplatz, Rheinpromenade</div>
+                    <div class="timeline-walking">🚶 15 Min. von Mittagessen</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">15:30 - 17:30</div>
+                    <div class="timeline-title"><span class="must-see">🏗️ Medienhafen - Architektur & Skyline</span></div>
+                    <div class="timeline-description">Moderne Architektur mit den berühmten <span class="highlight">Gehry-Bauten</span> (Neuer Zollhof)</div>
+                    <div class="timeline-location">Medienhafen, Speditionstraße</div>
+                    <div class="timeline-walking">🚶 20 Min. von Altstadt</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">17:30 - 18:30</div>
+                    <div class="timeline-title">☕ Kaffeepause</div>
+                    <div class="timeline-description">Café Hütten oder Rheinperle</div>
+                    <div class="timeline-location">Medienhafen</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">18:30 - 19:30</div>
+                    <div class="timeline-title"><span class="must-see">⛵ Rheinschifffahrt</span></div>
+                    <div class="timeline-description">1-stündige Rundfahrt ab Burgplatz</div>
+                    <div class="timeline-location">Abfahrt: Burgplatz (Anleger)</div>
+                    <div class="timeline-walking">🚶 15 Min. vom Medienhafen</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">19:30 - 20:30</div>
+                    <div class="timeline-title">🍽️ Abendessen</div>
+                    <div class="timeline-description">Restaurant Im Goldenen Kessel oder Uerige</div>
+                    <div class="timeline-location">Altstadt</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">20:30 - 21:30</div>
+                    <div class="timeline-title"><span class="must-see">🌃 Rheinturm zur blauen Stunde</span></div>
+                    <div class="timeline-description">Aussichtsplattform (172m) mit 360°-Blick. Blaue Stunde: ~20:45-21:15 Uhr</div>
+                    <div class="timeline-location">Rheinturm, Stromstraße 20</div>
+                    <div class="timeline-walking">🚶 20 Min. vom Medienhafen</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SAMSTAG -->
+        <div class="day-plan">
+            <div class="day-header">Samstag, 23. Mai 2026<span class="date">Street Art & Natur</span></div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-time">08:30 - 09:30</div>
+                    <div class="timeline-title">☕ Frühstück</div>
+                    <div class="timeline-location">Me and All Hotel</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">09:30 - 11:30</div>
+                    <div class="timeline-title"><span class="must-see">🎨 Urban Art Walk - Teil 1</span></div>
+                    <div class="timeline-description"><span class="highlight">Pretty Portal</span> im Medienhafen: Großformatige Street-Art-Wände</div>
+                    <div class="timeline-location">Medienhafen, Speditionstraße</div>
+                    <div class="timeline-walking">🚶 25 Min. vom Hotel</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">11:30 - 12:30</div>
+                    <div class="timeline-title">📸 Street Art On Buildings</div>
+                    <div class="timeline-description">Fotostopps an markanten Gebäuden</div>
+                    <div class="timeline-location">Innenstadt</div>
+                    <div class="timeline-walking">🚶 20 Min. vom Pretty Portal</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">12:30 - 13:30</div>
+                    <div class="timeline-title">🍽️ Mittagessen</div>
+                    <div class="timeline-description">Naniwaya (japanisch) in Little Tokio</div>
+                    <div class="timeline-location">Immermannstraße / Little Tokio</div>
+                    <div class="timeline-walking">🚶 15 Min. zurück zum Hotel</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">13:30 - 15:30</div>
+                    <div class="timeline-title"><span class="must-see">🎨 Urban Art Walk - Teil 2: Hall of Fame Oberbilk Sonnenpark</span></div>
+                    <div class="timeline-description">Eines der größten legalen Graffiti-Areale Deutschlands</div>
+                    <div class="timeline-location">Sonnenpark, Oberbilk</div>
+                    <div class="timeline-walking">🚶 30 Min. vom Hotel oder 15 Min. mit Straßenbahn 706</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">15:30 - 16:30</div>
+                    <div class="timeline-title"><span class="must-see">🏯 Little Tokio</span></div>
+                    <div class="timeline-description">Japanisches Viertel mit Restaurants und Geschäften</div>
+                    <div class="timeline-location">Immermannstraße 46-50</div>
+                    <div class="timeline-walking">🚶 2 Min. vom Hotel</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">16:30 - 18:30</div>
+                    <div class="timeline-title"><span class="must-see">🌳 Nordpark Düsseldorf</span></div>
+                    <div class="timeline-description">Grüne Oase mit Japanischem Garten und Rosengarten</div>
+                    <div class="timeline-location">Nordpark, Kennedydamm</div>
+                    <div class="timeline-walking">🚶 25 Min. vom Hotel oder 10 Min. mit U-Bahn</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">18:30 - 20:00</div>
+                    <div class="timeline-title">🍽️ Abendessen</div>
+                    <div class="timeline-description">Takumi (japanisch) oder Brauerei Kürzer</div>
+                    <div class="timeline-location">Immermannstraße / Altstadt</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SONNTAG -->
+        <div class="day-plan">
+            <div class="day-header">Sonntag, 24. Mai 2026<span class="date">Abschied & letzte Highlights</span></div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-time">08:30 - 09:30</div>
+                    <div class="timeline-title">☕ Frühstück</div>
+                    <div class="timeline-location">Me and All Hotel</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">09:30 - 11:30</div>
+                    <div class="timeline-title">🏙️ Letzte Besichtigungen</div>
+                    <div class="timeline-description">Option 1: Rückbesuch Altstadt. Option 2: Spaziergang am Rhein</div>
+                    <div class="timeline-location">Altstadt oder Rheinufer</div>
+                    <div class="timeline-walking">🚶 10-15 Min. vom Hotel</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">11:30 - 13:00</div>
+                    <div class="timeline-title">🍽️ Mittagessen</div>
+                    <div class="timeline-description">Brauerei Schlösser oder Restaurant am Rhein</div>
+                    <div class="timeline-location">Altstadt oder Rheinufer</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">13:00 - 15:30</div>
+                    <div class="timeline-title">🛍️ Freie Zeit & Souvenirs</div>
+                    <div class="timeline-description">Königsallee, Altstadt oder Little Tokio</div>
+                    <div class="timeline-location">Innenstadt</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">15:30 - 16:00</div>
+                    <div class="timeline-title">🏨 Rückweg zum Hotel</div>
+                    <div class="timeline-location">Me and All Hotel</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">16:00 - 16:30</div>
+                    <div class="timeline-title">🔑 Check-out</div>
+                    <div class="timeline-location">Me and All Hotel Düsseldorf</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">16:30 - 17:30</div>
+                    <div class="timeline-title">🚆 Transfer zum Flughafen</div>
+                    <div class="timeline-description">S-Bahn S11 vom Hauptbahnhof</div>
+                    <div class="timeline-location">Flughafen Düsseldorf (DUS)</div>
+                    <div class="timeline-walking">🚶 5 Min. zum Hbf, dann S11</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">17:30 - 19:15</div>
+                    <div class="timeline-title">✈️ Flughafen & Abflug</div>
+                    <div class="timeline-location">Flughafen Düsseldorf (DUS)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- KARTE -->
+        <div class="map-section">
+            <div class="map-header">
+                <h2>🗺️ Interaktive Karte mit allen Standorten</h2>
+                <p><a href="https://www.google.com/maps/dir/?api=1&destination=Düsseldorf&waypoints=51.2225,6.7750|51.2256,6.7822|51.2194,6.7667|51.2217,6.7758|51.2175,6.7678|51.2083,6.7831|51.2456,6.7750|51.2286,6.7894|51.2236,6.7828" target="_blank">📱 Karte in Google Maps öffnen</a></p>
+            </div>
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d102048.3456789012!2d6.7!3d51.2!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDHCsDMyJzI0LjAiTiA2KzM2JzM0LjAiJXQ!5e0!3m2!1sde!2sde!4v1234567890" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+
+        <!-- GALERIE -->
+        <div class="gallery">
+            <h2>📸 Sehenswürdigkeiten in Bildern</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/D%C3%BCsseldorf_Medienhafen_Neuer_Zollhof_by_Night.jpg/800px-D%C3%BCsseldorf_Medienhafen_Neuer_Zollhof_by_Night.jpg" alt="Gehry-Bauten">
+                    <div class="gallery-caption">Gehry-Bauten (Neuer Zollhof)</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/D%C3%BCsseldorf_Rheinturm_2021.jpg/800px-D%C3%BCsseldorf_Rheinturm_2021.jpg" alt="Rheinturm">
+                    <div class="gallery-caption">Rheinturm</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/K%C3%B6nigsallee_D%C3%BCsseldorf_2020_02.jpg/800px-K%C3%B6nigsallee_D%C3%BCsseldorf_2020_02.jpg" alt="Königsallee">
+                    <div class="gallery-caption">Königsallee</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/D%C3%BCsseldorf_Altstadt_Burgplatz_2020.jpg/800px-D%C3%BCsseldorf_Altstadt_Burgplatz_2020.jpg" alt="Altstadt">
+                    <div class="gallery-caption">Altstadt mit Burgplatz</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/K%C3%B6-B%C3%B6gen_D%C3%BCsseldorf_2020.jpg/800px-K%C3%B6-B%C3%B6gen_D%C3%BCsseldorf_2020.jpg" alt="Kö-Bögen">
+                    <div class="gallery-caption">Kö-Bögen</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Nordpark_D%C3%BCsseldorf_Japanischer_Garten_2020.jpg/800px-Nordpark_D%C3%BCsseldorf_Japanischer_Garten_2020.jpg" alt="Nordpark">
+                    <div class="gallery-caption">Nordpark mit Japanischem Garten</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/D%C3%BCsseldorf_Little_Tokyo_Immermannstra%C3%9Fe_2020.jpg/800px-D%C3%BCsseldorf_Little_Tokyo_Immermannstra%C3%9Fe_2020.jpg" alt="Little Tokio">
+                    <div class="gallery-caption">Little Tokio</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/D%C3%BCsseldorf_Medienhafen_Skyline_2020.jpg/800px-D%C3%BCsseldorf_Medienhafen_Skyline_2020.jpg" alt="Medienhafen Skyline">
+                    <div class="gallery-caption">Medienhafen Skyline</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TIPPS -->
+        <div class="tips-section">
+            <h2>💡 Praktische Tipps</h2>
+            <div class="tip-item"><strong>🚇 ÖPNV:</strong> Tageskarte für 5 Personen: ~€12-15 (gilt für alle Busse/Bahnen/S-Bahnen)</div>
+            <div class="tip-item"><strong>🍺 Altbier:</strong> Probieren: Uerige, Fuchschen, Schlösser, Kürzer (ca. €2,50-3,50)</div>
+            <div class="tip-item"><strong>🎟️ Eintritte:</strong> Rheinturm: €9, Rheinschifffahrt: €12-15, Japanischer Garten: frei</div>
+            <div class="tip-item"><strong>💶 Bezahlung:</strong> Karte akzeptiert, aber Bargeld in Brauereien üblich</div>
+            <div class="tip-item"><strong>🌧️ Wetter:</strong> Mai: 15-20°C, Regenschirm & leichte Jacke empfehlenswert</div>
+            <div class="tip-item"><strong>📱 WLAN:</strong> Kostenlos in Cafés, am Hauptbahnhof und öffentlichen Plätzen</div>
+        </div>
+
+        <!-- LEGENDE -->
+        <div class="info-box">
+            <h2>📌 Legende</h2>
+            <p><span class="must-see">🔴 Rote Markierungen</span> = Muss gesehen werden (Pflichtprogramm)</p>
+            <p><span class="highlight">🟡 Gelb markiert</span> = Besondere Highlights</p>
+            <p><span class="timeline-walking">🟢 Blau hinterlegt</span> = Zu-Fuß-Strecken mit Gehzeit</p>
+        </div>
+
+        <footer>
+            <p><strong>Düsseldorf Reiseplan 2026</strong> | Für Angus Young + 4 Freunde</p>
+            <p>Bilder © Wikimedia Commons (CC-BY-SA oder Public Domain)</p>
+        </footer>
+    </div>
+</body>
+</html>
